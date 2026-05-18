@@ -30,6 +30,14 @@ async function run() {
     const facilityCollection = db.collection("facilities");
 
 
+    app.get('/facility', async(req,res) => {
+
+        const result = await facilityCollection.find().toArray();
+        res.json(result);
+
+    })
+
+
     app.post('/facility', async(req, res) => {
 
         const facilityData = req.body;
