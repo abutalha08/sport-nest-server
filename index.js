@@ -28,6 +28,7 @@ async function run() {
     const db = client.db("sportNest");
 
     const facilityCollection = db.collection("facilities");
+    const bookingCollection = db.collection("bookings");
 
 
     app.get('/facility', async(req,res) => {
@@ -60,6 +61,14 @@ async function run() {
         res.json(result);
 
     })
+
+
+     app.post("/booking", async (req, res) => {
+      const bookingData = req.body;
+      const result = await bookingCollection.insertOne(bookingData);
+
+      res.json(result);
+    });
 
 
 
