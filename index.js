@@ -86,6 +86,17 @@ async function run() {
     });
 
 
+    app.delete("/facility/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const result = await facilityCollection.deleteOne({
+    _id: new ObjectId(id),
+  });
+
+  res.json(result);
+});
+
+
      app.post("/booking", async (req, res) => {
       const bookingData = req.body;
 
