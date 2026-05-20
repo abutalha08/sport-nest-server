@@ -42,7 +42,7 @@ async function run() {
     app.post('/facility', async(req, res) => {
 
         const facilityData = req.body;
-        console.log(facilityData)
+        // console.log(facilityData)
 
         const result = await facilityCollection.insertOne(facilityData)
 
@@ -65,6 +65,8 @@ async function run() {
 
      app.post("/booking", async (req, res) => {
       const bookingData = req.body;
+
+      // console.log(bookingData)
       const result = await bookingCollection.insertOne(bookingData);
 
       res.json(result);
@@ -74,6 +76,15 @@ async function run() {
       const { userId } = req.params;
 
       const result = await bookingCollection.find({ userId: userId }).toArray();
+
+      res.json(result);
+    });
+
+    app.delete("/booking/:bookingId", async (req, res) => {
+      const { bookingId } = req.params;
+      const result = await bookingCollection.deleteOne({
+        _id: new ObjectId(bookingId),
+      });
 
       res.json(result);
     });
