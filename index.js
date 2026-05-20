@@ -62,6 +62,29 @@ async function run() {
 
     })
 
+    app.get("/my-facilities/:email", async (req, res) => {
+  const { email } = req.params;
+
+  const result = await facilityCollection
+    .find({ ownerEmail: email })
+    .toArray();
+
+  res.json(result);
+});
+
+ app.patch("/facility/:id", async (req, res) => {
+      const { id } = req.params;
+      const updatedData = req.body;
+      console.log(updatedData);
+
+      const result = await facilityCollection.updateOne(
+        { _id: new ObjectId(id) },
+        { $set: updatedData },
+      );
+
+      res.json(result);
+    });
+
 
      app.post("/booking", async (req, res) => {
       const bookingData = req.body;
