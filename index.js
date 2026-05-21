@@ -60,12 +60,34 @@ async function run() {
     })
 
 
-    app.get('/facility', async(req,res) => {
+    app.get("/facility", async (req, res) => {
 
-        const result = await facilityCollection.find().toArray();
-        res.json(result);
+  const {
+    search,
+    facilityType,
+  } = req.query;
 
-    })
+  let query = {};
+
+  // Search by facility name
+  if (search) {
+    query.facilityName = {
+      $regex: search,
+      $options: "i",
+    };
+  }
+
+  // Filter by facility type
+  if (facilityType) {
+    query.facilityType = facilityType;
+  }
+
+  const result = await facilityCollection
+    .find(query)
+    .toArray();
+
+  res.json(result);
+});
 
 
     app.post('/facility', verifyToken, async(req, res) => {
